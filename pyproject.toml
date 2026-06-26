@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aapp"
+version = "0.1.0"
+description = "Archaeological Artifact Photogrammetry Pipeline — sub-millimeter 3D digitization for small-scale artifacts using a 4K action camera"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Stefano Scipioni", email = "stefano.scipioni@csgalileo.net" },
+]
+keywords = ["photogrammetry", "archaeology", "3d-reconstruction", "sfm", "mvs", "opencv"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Multimedia :: Graphics :: 3D Modeling",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "opencv-python>=4.8",
+    "numpy>=1.24",
+    "open3d>=0.18",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+]
+
+[project.scripts]
+aapp = "aapp.cli:main"
+
+[project.urls]
+Repository = "https://github.com/stefanoscipioni/aapp"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aapp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

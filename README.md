@@ -42,6 +42,8 @@ OpenMVG         # compiled C++ binaries on PATH
 OpenMVS         # compiled C++ binaries on PATH
 ```
 
+See [`docs/installation.md`](docs/installation.md) for step-by-step install instructions including OpenMVG/OpenMVS build-from-source and Arduino firmware flashing.
+
 ## Acquisition Protocol
 
 1. **Calibrate** — photograph a checkerboard (9×6, 25 mm squares) from many angles in the exact capture mode you will use. Minimum 10 valid frames.
