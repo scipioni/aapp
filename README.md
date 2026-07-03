@@ -55,16 +55,30 @@ See [`docs/installation.md`](docs/installation.md) for step-by-step install inst
 ## Usage
 
 ```python
-from pipeline import ArchaeologicalPhotogrammetryPipeline
+from aapp import ArchaeologicalPhotogrammetryPipeline
 
 pipeline = ArchaeologicalPhotogrammetryPipeline(workspace_dir="./find_001")
 
-pipeline.calibrate_fisheye_camera()          # Kannala-Brandt model fit
-pipeline.batch_undistort_images()            # remap to standard pinhole
-pipeline.execute_openmvg_sfm()               # sparse SfM (SIFT + incremental BA)
-pipeline.execute_openmvs_reconstruction()    # dense cloud → mesh → texture
-pipeline.validate_and_filter_mesh_open3d()   # topology check + interactive view
+pipeline.calibrate()               # Kannala-Brandt model fit
+pipeline.undistort()               # remap to standard pinhole
+pipeline.sfm()                     # sparse SfM (SIFT + incremental BA)
+pipeline.dense_reconstruction()    # dense cloud → mesh → refine → texture
+pipeline.validate(visualize=True)  # topology check + interactive view
 ```
+
+Or from the command line, stage by stage:
+
+```bash
+aapp init ./find_001          # create the workspace layout
+aapp calibrate ./find_001 --checkerboard 9x6 --square-size 0.025
+aapp undistort ./find_001
+aapp sfm ./find_001
+aapp dense ./find_001 --texture-side 8192
+aapp validate ./find_001 --show
+```
+
+`aapp run ./find_001` executes every stage in order. Each stage is
+idempotent and restartable — intermediate state lives in the workspace.
 
 ### Workspace layout
 
